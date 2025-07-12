@@ -8,28 +8,25 @@ import { ComponentPalette } from '@/components/builder/ComponentPalette';
 import { Canvas } from '@/components/builder/Canvas';
 import { DevicePreview } from '@/components/preview/DevicePreview';
 import { Toolbar } from '@/components/builder/Toolbar';
+import { PropertiesPanel } from '@/components/builder/PropertiesPanel';
 import { createComponentInstance } from '@/lib/componentLibrary';
 import { ComponentConfig } from '@/types';
 
 function AppBuilderContent() {
   const { state, addComponent, reorderComponents, getCurrentScreen } = useAppBuilder();
-  const [activeId, setActiveId] = React.useState<string | null>(null);
   const [activeComponent, setActiveComponent] = React.useState<ComponentConfig | null>(null);
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
-    setActiveId(active.id as string);
 
     if (active.data.current?.type === 'component') {
       setActiveComponent(active.data.current.componentConfig);
     }
   };
-
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     
     if (!over) {
-      setActiveId(null);
       setActiveComponent(null);
       return;
     }
@@ -55,7 +52,6 @@ function AppBuilderContent() {
       }
     }
 
-    setActiveId(null);
     setActiveComponent(null);
   };
 
@@ -64,14 +60,16 @@ function AppBuilderContent() {
       <div className="h-screen flex flex-col bg-gray-100">
         {/* Toolbar */}
         <Toolbar />
-        
-        {/* Main Content */}
+          {/* Main Content */}
         <div className="flex-1 flex overflow-hidden">
           {/* Component Palette */}
           <ComponentPalette />
           
           {/* Canvas */}
           <Canvas />
+          
+          {/* Properties Panel */}
+          {state.selectedComponent && <PropertiesPanel />}
           
           {/* Device Preview */}
           <DevicePreview />

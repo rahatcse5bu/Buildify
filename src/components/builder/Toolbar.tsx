@@ -4,6 +4,7 @@ import React from 'react';
 import { useAppBuilder } from '@/contexts/AppBuilderContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TemplateGallery } from './TemplateGallery';
 import { 
   Play, 
   Square, 
@@ -67,8 +68,7 @@ export function Toolbar() {
           <h1 className="text-xl font-bold text-gray-900">Buildify</h1>
           <div className="w-px h-6 bg-gray-300"></div>
         </div>
-        
-        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
           <Input
             value={state.currentApp.name}
             onChange={(e) => {
@@ -84,6 +84,7 @@ export function Toolbar() {
             className="w-48 h-8"
             placeholder="App name"
           />
+          <TemplateGallery />
         </div>
       </div>
 
